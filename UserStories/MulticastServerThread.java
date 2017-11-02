@@ -18,8 +18,6 @@ public class MulticastServerThread extends QuoteServerThread {
                 // construct quote
                 String dString = null;
 
-                // in 代表開啟的 file handler。如果是 null 則代表沒能開啟檔案，
-                // 則只送回 server 目前的時間
                 if (in == null)
                     dString = new Date().toString();
                 else

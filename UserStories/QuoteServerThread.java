@@ -2,9 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-// 由於在我們的範例中，MulticastServerThread 繼承了 QuoteServerThread
-// 也 override 了其 run()，所以為了簡化，原來範例中的 run() 我們
-// 就把他刪除了。
+
 
 public class QuoteServerThread extends Thread {
     // Notice that the server uses a DatagramSocket to broadcast packet received
@@ -24,12 +22,7 @@ public class QuoteServerThread extends Thread {
 
     public QuoteServerThread(String name) throws IOException {
         super(name);
-
-        // The port number doesn't actually matter in this example because
-        // the client never send anything to the server.
-        // 注意 DatagramSocket 不支援 setTimeToLive()
         socket = new DatagramSocket(4445);
-
         try {
             in = new BufferedReader(new FileReader("one-liners.txt"));
         } catch (FileNotFoundException e) {
