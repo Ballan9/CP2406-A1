@@ -12,11 +12,13 @@ public class Player {
 
     public int getY(){return y;}
 
-    public moveUp() { y-=incint; }
+    public void moveUp() { y-=incint; }
 
-    public moveDown() { y+=incint; }
+    public void moveDown() { y+=incint; }
 
-    public moveRight ()
+    public void moveRight() { x+=incint; }
+
+    public void moveLeft() { x-=incint; }
 
 
 }
