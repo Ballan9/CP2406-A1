@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class UserTest3 {
+public class LeaderBoard {
 
     public static void main(String[] args) {
         String userName = getName();
