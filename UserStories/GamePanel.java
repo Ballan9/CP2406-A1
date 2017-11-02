@@ -1,18 +1,19 @@
 import javax.swing.*;
+import java.awt.event.*;
 
-public class GamePanel extends JFrame implements ActionListene{
+public class GamePanel extends JFrame implements ActionListener{
 
     Timer myTimer;
-    TronPanel tp;
+    TronCycle tp;
     StartScreen s;
 
 
     public static void main(String[] args) { GamePanel t = new GamePanel();
        int height = Integer.parseInt(JOptionPane.showInputDialog(null, " Please Enter the height"));
        int width = Integer.parseInt(JOptionPane.showInputDialog(null, "Please Enter the Width"));
-       GamePanel(height, width);
+       new GamePanel(height, width);
     }
-    public static void GamePanel(int height, int width) {
+    public GamePanel(int height, int width) {
 
         JFrame GameGrid = new JFrame();
         GameGrid.setSize(height, width);
