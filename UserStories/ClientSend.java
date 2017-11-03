@@ -6,8 +6,8 @@ public class ClientSend {
 
     public static void sendMessage(String message)throws Exception{
         DatagramSocket socket = new DatagramSocket(6987);
-        InetAddress address = InetAddress.getByName("10.999.99.999");
-        DatagramPacket packet = new DatagramPacket(message.getBytes(), message.length(),address,99999);
+        InetAddress serverAddress = InetAddress.getByName("10.143.60.227");
+        DatagramPacket packet = new DatagramPacket(message.getBytes(), message.length(),serverAddress,9999);
         socket.send(packet);
         socket.close();
     }

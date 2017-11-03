@@ -5,10 +5,11 @@ import java.awt.event.ActionListener;
 import java.net.MulticastSocket;
 
 public class GamePanel extends JFrame {
+    GamePanel gamePanel;
 
     public GamePanel() {
-
-        setTitle("Tron LightCcles");
+        gamePanel = this;
+        setTitle("Tron LightCycles");
         setSize(500, 500);
 
         // Create JButton and JPanel
@@ -18,7 +19,16 @@ public class GamePanel extends JFrame {
         stButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MulticastClient client = new MulticastClient();
+                String username = JOptionPane.showInputDialog("Please Enter Your Name");
+                MulticastClient client = new MulticastClient(gamePanel,panel);
+                client.start();
+                try {
+                    ClientSend.sendMessage("USERNAME "+ username);
+                    //gamePanel.validate();
+                    //gamePanel.repaint();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 

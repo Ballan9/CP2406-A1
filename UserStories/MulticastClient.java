@@ -1,15 +1,21 @@
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 public class MulticastClient extends Thread {
+    private GamePanel gamePanel;
+    private JPanel panel;
 
-
+    public MulticastClient(GamePanel gamePanel, JPanel panel){
+        this.gamePanel = gamePanel;
+        this.panel = panel;}
     public void run (){
 
         try{
-        MulticastSocket socket = new MulticastSocket(4446);
-        InetAddress address = InetAddress.getByName("230.0.0.1");
+        MulticastSocket socket = new MulticastSocket(4545);
+        InetAddress address = InetAddress.getByName("228.5.5.5");
         socket.joinGroup(address);
 
         DatagramPacket packet;
@@ -20,10 +26,16 @@ public class MulticastClient extends Thread {
             socket.receive(packet);
 
             String received = new String(buf);
-            System.out.println("Quote of the Moment: " + received);
             if (received.startsWith("END")){
                 break;
             }
+            else if(received.startsWith("Starting game ")){
+                gamePanel.remove(panel);
+                GameBoard gameBoard = new GameBoard();
+                gamePanel.add(gameBoard);
+                gamePanel.validate();
+                gamePanel.repaint();}
+            System.out.println("Message "+ received);
         }
 
         socket.leaveGroup(address);
@@ -31,5 +43,6 @@ public class MulticastClient extends Thread {
     } catch(Exception e){
             e.printStackTrace();
         }}
+
 
 }
