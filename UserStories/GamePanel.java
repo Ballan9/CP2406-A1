@@ -1,8 +1,10 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MulticastSocket;
 
-public class GamePanel extends JFrame implements ActionListener {
+public class GamePanel extends JFrame {
 
     public GamePanel() {
 
@@ -10,28 +12,20 @@ public class GamePanel extends JFrame implements ActionListener {
         setSize(500, 500);
 
         // Create JButton and JPanel
-        JButton button = new JButton("Start");
-        button.addActionListener(new ActionListener() {
+        JButton stButton = new JButton("Start");
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        stButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-
+                MulticastClient client = new MulticastClient();
             }
         });
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            button.removeActionListener(this);
-        }
-
-
-
-
-        JPanel panel = new JPanel();
-
         // Add button to JPanel
-        panel.add(button);
+        panel.add(stButton);
         // And JPanel needs to be added to the JFrame itself!
-        this.getContentPane().add(panel);
-
+        add(panel);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -40,7 +34,6 @@ public class GamePanel extends JFrame implements ActionListener {
 
         GamePanel a = new GamePanel();
     }
-
 
 }
 
