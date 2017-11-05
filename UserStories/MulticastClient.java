@@ -7,14 +7,18 @@ import java.util.*;
 public class MulticastClient extends Thread {
     private GamePanel gamePanel;
     private JPanel panel;
+    String myname;
     String [] message;
     String userName;
     int x;
     int y;
+    ArrayList <LightCycle> CycleArray;
 
 
-    public MulticastClient(GamePanel gamePanel, JPanel panel){
+    public MulticastClient(GamePanel gamePanel, JPanel panel, String myname){
         this.gamePanel = gamePanel;
+        CycleArray = new ArrayList<>();
+        this.myname = myname;
         this.panel = panel;}
     public void run (){
 
@@ -36,7 +40,7 @@ public class MulticastClient extends Thread {
             }
             else if(received.startsWith("Starting game ")){
                 gamePanel.remove(panel);
-                GameBoard gameBoard = new GameBoard();
+                GameBoard gameBoard = new GameBoard(CycleArray,myname);
                 gamePanel.add(gameBoard);
                 gamePanel.validate();
                 gamePanel.repaint();}
@@ -46,6 +50,8 @@ public class MulticastClient extends Thread {
                 userName = message[2];
                 x = Integer.parseInt(message[3]);
                 y = Integer.parseInt(message[4]);
+                LightCycle cycle = new LightCycle(userName, myname, x, y);
+                CycleArray.add(cycle);
 
 
             }System.out.println("Message "+ received);

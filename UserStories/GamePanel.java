@@ -20,7 +20,7 @@ public class GamePanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = JOptionPane.showInputDialog("Please Enter Your Name");
-                MulticastClient client = new MulticastClient(gamePanel,panel);
+                MulticastClient client = new MulticastClient(gamePanel,panel,username);
                 client.start();
                 try {
                     ClientSend.sendMessage("USERNAME "+ username);
