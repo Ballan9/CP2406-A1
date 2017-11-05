@@ -22,13 +22,15 @@ public class GameBoard extends JPanel implements ActionListener {
     private int velY;
     private boolean trail;
     ArrayList <Trail> trailArrray;
+    int [][] cycleTrailArray;
 
 
-    public GameBoard(ArrayList<LightCycle> cycleArray, String myname, ArrayList<Trail> trailArray){
+    public GameBoard(ArrayList<LightCycle> cycleArray, String myname, ArrayList<Trail> trailArray, int[][] cycleTrailArray){
         setSize(500,500);
         setBackground(Color.white);
         this.cycleArray = cycleArray;
         this.myname = myname;
+        this.cycleTrailArray = cycleTrailArray;
         this.trailArrray = trailArray;
         for (LightCycle cycle:cycleArray){
             if (Objects.equals(cycle.getUsername(), myname)){
@@ -124,6 +126,20 @@ public class GameBoard extends JPanel implements ActionListener {
     public void move(){
         x = x+ velX;
         y = y+ velY;
+
+        if(cycleTrailArray[x][y]==1){
+            timer.stop();
+            JOptionPane.showMessageDialog(null,"You Died, Please Play Again so my life is meaningless");
+        }
+        if (y + velY <2 || y + velY >498){
+            timer.stop();
+            JOptionPane.showMessageDialog(null,"You Died, Please Play Again so my life is meaningless");
+        }
+        if (x + velX <2 || x + velX >498){
+            timer.stop();
+            JOptionPane.showMessageDialog(null,"You Died, Please Play Again so my life is meaningless");
+
+        }
 //        Collision detection goes here
     }
 

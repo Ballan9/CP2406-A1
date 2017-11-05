@@ -14,7 +14,7 @@ public class Trail {
         this.userName = userName;
         this.x = x;
         this.y = y;
-        if(Objects.equals(userName, myname)){
+        if(Objects.equals(getUserName(), myname)){
             trailColor = Color.green;
         }
         else trailColor = Color.pink;

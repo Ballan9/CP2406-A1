@@ -22,6 +22,7 @@ public class MulticastClient extends Thread {
         this.gamePanel = gamePanel;
         CycleArray = new ArrayList<>();
         trailArray = new ArrayList<>();
+        cycleTrailArray= new int[500][500];
         this.myname = myname;
         this.panel = panel;}
     public void run (){
@@ -44,7 +45,7 @@ public class MulticastClient extends Thread {
             }
             else if(received.startsWith("Starting game ")){
                 gamePanel.remove(panel);
-                GameBoard gameBoard = new GameBoard(CycleArray,myname,trailArray);
+                GameBoard gameBoard = new GameBoard(CycleArray,myname,trailArray, cycleTrailArray);
                 gamePanel.add(gameBoard);
                 gamePanel.validate();
                 gamePanel.repaint();}
@@ -66,6 +67,7 @@ public class MulticastClient extends Thread {
             x = Integer.parseInt(message[3].trim());
             y = Integer.parseInt(message[4].trim());
             trail = Boolean.parseBoolean(message[5].trim());
+
                 for (LightCycle cycle:CycleArray){
 
                     if (Objects.equals(userName, cycle.getUsername())){
@@ -76,6 +78,10 @@ public class MulticastClient extends Thread {
                         cycle.setX(x);
                         cycle.setY(y);
                     }
+                }
+
+                if (trail == true){
+                    cycleTrailArray[x][y]=1;
                 }
             }
 
