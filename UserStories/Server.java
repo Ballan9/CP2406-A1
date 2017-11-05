@@ -45,9 +45,12 @@ public class Server {
                 BroadcastMessage("Starting game ");
 
             }
+
             //BroadcastMessage("This is a Message");
         }
-
+else if (message.startsWith("USER POSITION ")){
+            BroadcastMessage(message);
+        }
 
     }socket.close();
     }

@@ -13,6 +13,8 @@ public class MulticastClient extends Thread {
     int x;
     int y;
     ArrayList <LightCycle> CycleArray;
+    int [][] cycleTrailArray;
+    ArrayList<> trailArray;
 
 
     public MulticastClient(GamePanel gamePanel, JPanel panel, String myname){
@@ -47,14 +49,29 @@ public class MulticastClient extends Thread {
 
             else if (received.startsWith("ADD USER")){
                 message = received.split(" ");
-                userName = message[2];
-                x = Integer.parseInt(message[3]);
-                y = Integer.parseInt(message[4]);
+                userName = message[2].trim();
+                x = Integer.parseInt(message[3].trim());
+                y = Integer.parseInt(message[4].trim());
                 LightCycle cycle = new LightCycle(userName, myname, x, y);
                 CycleArray.add(cycle);
 
 
-            }System.out.println("Message "+ received);
+            }
+            else if (received.startsWith("USER POSITION")){
+//                System.out.println("*****************************");
+            message = received.split(" ");
+            userName = message[2].trim();
+            x = Integer.parseInt(message[3].trim());
+            y = Integer.parseInt(message[4].trim());
+                for (LightCycle cycle:CycleArray){
+                    if (Objects.equals(userName, cycle.getUsername())){
+                        cycle.setX(x);
+                        cycle.setY(y);
+                    }
+                }
+            }
+
+            System.out.println("Message "+ received);
         }
 
         socket.leaveGroup(address);

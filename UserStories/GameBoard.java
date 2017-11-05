@@ -4,20 +4,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.Key;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.concurrent.CyclicBarrier;
 
 public class GameBoard extends JPanel implements ActionListener {
     Timer timer;
     ArrayList <LightCycle> cycleArray;
     String myname;
     String userName;
-    int x;
-    int y;
-    int maxX = 3;
-    int maxY = 3;
-    int minX = -3;
-    int minY = -3;
-    int velX;
-    int velY;
+    private int x;
+    private int y;
+    private int maxX = 3;
+    private int maxY = 3;
+    private int minX = -3;
+    private int minY = -3;
+    private int velX;
+    private int velY;
+    private boolean trail;
 
 
     public GameBoard(ArrayList<LightCycle> cycleArray, String myname){
@@ -26,7 +29,7 @@ public class GameBoard extends JPanel implements ActionListener {
         this.cycleArray = cycleArray;
         this.myname = myname;
         for (LightCycle cycle:cycleArray){
-            if (cycle.getUsername()==myname){
+            if (Objects.equals(cycle.getUsername(), myname)){
                 setX(cycle.getX());
                 setY(cycle.getY());
             }
@@ -36,6 +39,7 @@ public class GameBoard extends JPanel implements ActionListener {
         setX(x);
         timer = new Timer(20, this);
         timer.start();
+        trail = false;
         setOpaque(true);
         InputMap inputMap = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap =getActionMap();
@@ -70,8 +74,8 @@ public class GameBoard extends JPanel implements ActionListener {
                 velX = 0;
                 velY -= 0;
             } else {
-                velX += 1;
-                velY = 0;
+                velX = 0;
+                velY += 1;
             }
         }
     };
@@ -105,24 +109,36 @@ public class GameBoard extends JPanel implements ActionListener {
     Action SPACEACTION = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (getTrail() == false){
+                setTrail(true);
+            }
+            else {
+                setTrail(false);
+            }
 
         }
     };
 
-    public void moveCycle(){
+    public void move(){
         x = x+ velX;
         y = y+ velY;
 //        Collision detection goes here
     }
 
+    public void setTrail(boolean trail){
+        this.trail = trail;
+    }
 
+public boolean getTrail(){
+        return trail;
+}
 
     public int getVelX() {
         return velX;
     }
 
     public int getVelY() {
-        return maxY;
+        return velY;
     }
 
     public void setX(int x) {
@@ -135,17 +151,17 @@ public class GameBoard extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        moveCycle();
+        move();
         repaint();
-        String message = ("USER POSITION" + myname + " " + x + " " + y );
+        String message = ("USER POSITION " + myname + " " + x + " " + y + " " + getTrail());
         try {
             ClientSend.sendMessage(message);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
     }
-    public void paint (Graphics graphics){
-        super.paint(graphics);
+    public void paintComponent(Graphics graphics){
+        super.paintComponent(graphics);
         for (LightCycle cycle:cycleArray){
             cycle.draw(graphics);
         }
