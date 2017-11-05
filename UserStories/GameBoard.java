@@ -21,13 +21,15 @@ public class GameBoard extends JPanel implements ActionListener {
     private int velX;
     private int velY;
     private boolean trail;
+    ArrayList <Trail> trailArrray;
 
 
-    public GameBoard(ArrayList<LightCycle> cycleArray, String myname){
+    public GameBoard(ArrayList<LightCycle> cycleArray, String myname, ArrayList<Trail> trailArray){
         setSize(500,500);
         setBackground(Color.white);
         this.cycleArray = cycleArray;
         this.myname = myname;
+        this.trailArrray = trailArray;
         for (LightCycle cycle:cycleArray){
             if (Objects.equals(cycle.getUsername(), myname)){
                 setX(cycle.getX());
@@ -164,6 +166,9 @@ public boolean getTrail(){
         super.paintComponent(graphics);
         for (LightCycle cycle:cycleArray){
             cycle.draw(graphics);
+        }
+        for(Trail trail:trailArrray){
+            trail.draw(graphics);
         }
     }
 }
