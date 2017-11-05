@@ -4,6 +4,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Server {
     public static void main(String[] args) throws Exception {
@@ -14,6 +15,9 @@ public class Server {
         String username;
         String[] messageBreak;
         ArrayList<String> usernameList = new ArrayList<>();
+        int min = 100;
+        int max = 400;
+        Random r = new Random();
 
     while (true){
 
@@ -32,6 +36,12 @@ public class Server {
             usernameList.add(username);
 
             if (userCount==2){
+                for (int i = 0; i <usernameList.size();i++){
+                    String name = usernameList.get(i);
+                    int srtXpos = r.nextInt(max - min)+min;
+                    int srtYpos = r.nextInt(max - min)+min;
+                    BroadcastMessage("ADD USER " + name + " "+srtXpos + " " + srtYpos);
+                }
                 BroadcastMessage("Starting game ");
 
             }

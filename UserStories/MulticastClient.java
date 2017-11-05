@@ -7,6 +7,11 @@ import java.util.*;
 public class MulticastClient extends Thread {
     private GamePanel gamePanel;
     private JPanel panel;
+    String [] message;
+    String userName;
+    int x;
+    int y;
+
 
     public MulticastClient(GamePanel gamePanel, JPanel panel){
         this.gamePanel = gamePanel;
@@ -35,7 +40,15 @@ public class MulticastClient extends Thread {
                 gamePanel.add(gameBoard);
                 gamePanel.validate();
                 gamePanel.repaint();}
-            System.out.println("Message "+ received);
+
+            else if (received.startsWith("ADD USER")){
+                message = received.split(" ");
+                userName = message[2];
+                x = Integer.parseInt(message[3]);
+                y = Integer.parseInt(message[4]);
+
+
+            }System.out.println("Message "+ received);
         }
 
         socket.leaveGroup(address);

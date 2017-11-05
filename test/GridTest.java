@@ -1,6 +1,6 @@
 import org.junit.Test;
 public class GridTest {
-    @Test
+        @Test
     public void GridTester() throws Exception{
     Grids gridTest = new Grids();
 
